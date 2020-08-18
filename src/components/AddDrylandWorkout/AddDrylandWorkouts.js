@@ -9,16 +9,26 @@ function AddDrylandWorkouts() {
 
       <h3>Add Exercise</h3>
       <form id="NewExercise">
-        <input type="text" id="rating" name="rating" placeholder="Rating" />
+        <input
+          type="text"
+          id="intensity"
+          name="intensity"
+          placeholder="intensity"
+        />
 
-        <input type="radio" id="boulder" name="climbType" value="boulder" />
-        <label for="boulder">Boulder Problem</label>
-        <input type="radio" id="topRope" name="climbType" value="topRope" />
-        <label for="topRope">Top Rope</label>
-        <input type="radio" id="lead" name="climbType" value="lead" />
-        <label for="leadSport">Lead Sport</label>
-        <input type="radio" id="leadTrad" name="climbType" value="leadTrad" />
-        <label for="leadTrad">Lead Trad</label>
+        <input type="radio" id="cardio" name="workoutType" value="cardio" />
+        <label for="cardio">Carido</label>
+        <input type="radio" id="crossfit" name="workoutType" value="crossfit" />
+        <label for="crossfit">Crossfit</label>
+        <input
+          type="radio"
+          id="bodybuilding"
+          name="workoutType"
+          value="bodybuilding"
+        />
+        <label for="bodybuilding">Bodybuilding</label>
+        <input type="radio" id="strength" name="workoutType" value="strength" />
+        <label for="strength">Strength</label>
 
         <input type="textarea" id="notes" name="notes" placeholder="notes" />
 
@@ -27,11 +37,11 @@ function AddDrylandWorkouts() {
         </button>
       </form>
 
-      <h2>Climbs</h2>
+      <h2>Exercises</h2>
       {/*Display Climbs*/}
 
-      <h3>Change Session Details</h3>
-      <form id="EditSessionForm">
+      <h3>Change Workout Details</h3>
+      <form id="EditWorkoutForm">
         <input type="date" id="date" />
         <input type="text" id="location" placeholder="Location" />
         <input type="radio" id="indoor" name="indoorOutdoor" value="indoor" />
