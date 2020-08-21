@@ -7,16 +7,16 @@ module.exports = function (app) {
   const updateReply = new ReplyHandler();
 
   app
-    .route("/api/threads/:board")
+    .route("/api/threads/:workout")
 
     .post((req, res) => {
-      const board = req.params.board;
+      const workout = req.params.workout;
       const text = req.body.text;
       const delete_password = req.body.delete_password;
-      const callback = (data) => {
-        res.redirect(`/b/${board}/`);
+      const callback = (workout) => {
+        res.redirect(`/b/${workout}/`);
       };
-      updateThread.createThread(text, delete_password, callback, board);
+      updateThread.createThread(text, delete_password, callback, workout);
     })
 
     .get((req, res) => {
