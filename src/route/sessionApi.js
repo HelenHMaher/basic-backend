@@ -37,7 +37,7 @@ module.exports = function (app, db) {
               _id: entry._id,
               type: entry.type,
               date: entry.date,
-              title: entry.workout_title,
+              title: entry.title,
               exercise_count: entry.num_of_exercises,
             };
             return workout;
