@@ -1,8 +1,9 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { GlobalStyles } from "./global";
 import { ThemeProvider } from "styled-components";
 import { theme } from "./theme";
-import { AddClimb, AddDrylandWorkout, AddSession } from "./components";
+import { AddSession } from "./components/AddSession";
 
 //implement react router to enter a "thread" dependent on dryland or climbing//
 
@@ -11,13 +12,25 @@ function App() {
     <ThemeProvider theme={theme}>
       <>
         <GlobalStyles />
-        <h1>My Daily Climb</h1>
-        <AddSession />
-        <AddClimb />
-        <AddDrylandWorkout />
+        <Router>
+          <div>
+            <nav>
+              <Link to="/">Home</Link>
+            </nav>
+            <Switch>
+              <Route path="/">
+                <Home />
+              </Route>
+            </Switch>
+          </div>
+        </Router>
       </>
     </ThemeProvider>
   );
+}
+
+function Home() {
+  return <AddSession />;
 }
 
 export default App;

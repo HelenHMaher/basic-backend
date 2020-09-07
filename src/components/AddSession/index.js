@@ -1,1 +1,1 @@
-export { default } from "./AddSession";
+export { default as AddSession } from "./AddSession";

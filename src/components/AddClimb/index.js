@@ -1,1 +1,1 @@
-export { default } from "./AddClimb";
+export { default as AddClimb } from "./AddClimb";

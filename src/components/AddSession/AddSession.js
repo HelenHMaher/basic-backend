@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyledAddSession } from "./AddSession.styled";
-import ListSessions from "./ListSessions";
+import ListSessions from "../ListSessions";
 import axios from "axios";
 
 function AddSession() {
@@ -55,6 +55,7 @@ function AddSession() {
           Submit
         </button>
       </form>
+
       <div>
         {sessions.map((session) => (
           <ListSessions

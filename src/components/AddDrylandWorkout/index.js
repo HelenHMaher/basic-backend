@@ -1,1 +1,1 @@
-export { default } from "./AddDrylandWorkouts";
+export { default as AddDrylandWorkout } from "./AddDrylandWorkout";

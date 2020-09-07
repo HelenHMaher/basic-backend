@@ -1,9 +1,9 @@
 import React from "react";
-import { StyledAddDrylandWorkouts } from "./AddDrylandWorkouts.styled";
+import { StyledAddDrylandWorkout } from "./AddDrylandWorkout.styled";
 
-function AddDrylandWorkouts() {
+function AddDrylandWorkout() {
   return (
-    <StyledAddDrylandWorkouts>
+    <StyledAddDrylandWorkout>
       <h2>Current Dryland Workout</h2>
       {/*Display Basic Workout Info*/}
 
@@ -50,8 +50,8 @@ function AddDrylandWorkouts() {
           Submit Changes
         </button>
       </form>
-    </StyledAddDrylandWorkouts>
+    </StyledAddDrylandWorkout>
   );
 }
 
-export default AddDrylandWorkouts;
+export default AddDrylandWorkout;
