@@ -15,10 +15,10 @@ function App() {
         <Router>
           <div>
             <nav>
-              <Link to="/">Home</Link>
+              <Link to="/home">Home</Link>
             </nav>
             <Switch>
-              <Route path="/">
+              <Route path="/home">
                 <Home />
               </Route>
             </Switch>

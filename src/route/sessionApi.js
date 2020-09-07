@@ -23,7 +23,8 @@ module.exports = function (app, db) {
           date: workout.date,
           title: workout.title,
         };
-        res.json(entry);
+        console.log(entry);
+        res.redirect("/");
       });
     })
 

@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { StyledAddSession } from "./AddSession.styled";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { AddDrylandWorkout } from "../AddDrylandWorkout";
+import { AddClimb } from "../AddClimb";
 import ListSessions from "../ListSessions";
 import axios from "axios";
+const ObjectId = require("mongodb").ObjectId;
 
 function AddSession() {
   const [sessions, setSessions] = useState([{ date: "", type: "", title: "" }]);
@@ -19,7 +23,7 @@ function AddSession() {
             date: ele.date,
             type: ele.type,
             title: ele.title,
-            id: ele._id,
+            id: ele._id.str,
           });
         });
         console.log(
@@ -40,32 +44,43 @@ function AddSession() {
 
   return (
     <StyledAddSession>
-      <h2>New Training Session</h2>
-      <form id="newSessionSession" action="/api/session/" method="POST">
-        <input type="date" id="date" name="date" />
+      <Router>
+        <h2>New Training Session</h2>
+        <form id="newSessionSession" action="/api/session/" method="POST">
+          <input type="date" id="date" name="date" />
 
-        <input type="radio" id="climb" name="type" value="climb" />
-        <label for="climb">Climb</label>
-        <input type="radio" id="dryland" name="type" value="dryland" />
-        <label for="dryland">Dryland</label>
+          <input type="radio" id="climb" name="type" value="climb" />
+          <label for="climb">Climb</label>
+          <input type="radio" id="dryland" name="type" value="dryland" />
+          <label for="dryland">Dryland</label>
 
-        <input type="text" id="title" name="title" placeholder="title" />
+          <input type="text" id="title" name="title" placeholder="title" />
 
-        <button type="submit" value="Submit" id="submitNewSession">
-          Submit
-        </button>
-      </form>
+          <button type="submit" value="Submit" id="submitNewSession">
+            Submit
+          </button>
+        </form>
 
-      <div>
-        {sessions.map((session) => (
-          <ListSessions
-            key={session["id"]}
-            date={session["date"]}
-            type={session["type"]}
-            title={session["title"]}
-          />
-        ))}
-      </div>
+        <div>
+          {sessions.map((session) => (
+            <ListSessions
+              key={session["id"]}
+              date={session["date"]}
+              type={session["type"]}
+              title={session["title"]}
+            />
+          ))}
+        </div>
+
+        <Switch>
+          <Route path="/climb/:id">
+            <AddClimb />
+          </Route>
+          <Route path="/dryland/:id">
+            <AddDrylandWorkout />
+          </Route>
+        </Switch>
+      </Router>
     </StyledAddSession>
   );
 }
