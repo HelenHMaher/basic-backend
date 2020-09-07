@@ -5,7 +5,6 @@ import { AddDrylandWorkout } from "../AddDrylandWorkout";
 import { AddClimb } from "../AddClimb";
 import ListSessions from "../ListSessions";
 import axios from "axios";
-const ObjectId = require("mongodb").ObjectId;
 
 function AddSession() {
   const [sessions, setSessions] = useState([{ date: "", type: "", title: "" }]);
