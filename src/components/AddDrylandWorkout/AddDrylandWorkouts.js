@@ -4,7 +4,7 @@ import { StyledAddDrylandWorkouts } from "./AddDrylandWorkouts.styled";
 function AddDrylandWorkouts() {
   return (
     <StyledAddDrylandWorkouts>
-      <h2>Current Workout</h2>
+      <h2>Current Dryland Workout</h2>
       {/*Display Basic Workout Info*/}
 
       <h3>Add Exercise</h3>
@@ -37,10 +37,7 @@ function AddDrylandWorkouts() {
         </button>
       </form>
 
-      <h2>Exercises</h2>
-      {/*Display Climbs*/}
-
-      <h3>Change Workout Details</h3>
+      <h3>Change Dryland Workout Details</h3>
       <form id="EditWorkoutForm">
         <input type="date" id="date" />
         <input type="text" id="location" placeholder="Location" />

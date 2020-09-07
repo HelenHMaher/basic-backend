@@ -4,7 +4,7 @@ import { StyledAddClimb } from "./AddClimb.styled";
 function AddClimb() {
   return (
     <StyledAddClimb>
-      <h2>Current Session</h2>
+      <h2>Current Climbing Session</h2>
       {/*Display Basic Session Info*/}
 
       <h3>Add Climb</h3>
@@ -27,10 +27,7 @@ function AddClimb() {
         </button>
       </form>
 
-      <h2>Climbs</h2>
-      {/*Display Climbs*/}
-
-      <h3>Change Session Details</h3>
+      <h3>Change Climbing Session Details</h3>
       <form id="EditSessionForm">
         <input type="date" id="date" />
         <input type="text" id="location" placeholder="Location" />
