@@ -5,7 +5,7 @@ function AddSession() {
   return (
     <StyledAddSession>
       <h2>New Training Session</h2>
-      <form id="newSessionSession">
+      <form id="newSessionSession" action="/api/session/" method="POST">
         <input type="date" id="date" name="date" />
 
         <input type="radio" id="climb" name="type" value="climb" />

@@ -2,7 +2,7 @@ const ObjectId = require("mongodb").ObjectId;
 
 module.exports = function (app, db) {
   app
-    .route("/api/session")
+    .route("/api/session/")
 
     .post((req, res) => {
       if (!req.body.date) return res.json("please submit a date");
@@ -15,7 +15,7 @@ module.exports = function (app, db) {
         num_of_exercises: 0,
         exercises: [],
       };
-      db.insertOne(workout, (err, doc) => {
+      db.collection("session").insertOne(workout, (err, doc) => {
         if (err) res.json(`could not update: ${err}`);
         const entry = {
           _id: doc.insertedId,
@@ -28,24 +28,26 @@ module.exports = function (app, db) {
     })
 
     .get((req, res) => {
-      db.find({}).toArray((err, workouts) => {
-        if (err) return res.json(`could not find entries: ${err}`);
-        const workoutsArray = workouts.map((entry) => {
-          let workout = {
-            _id: entry._id,
-            type: entry.type,
-            date: entry.date,
-            title: entry.workout_title,
-            exercise_count: entry.num_of_exercises,
-          };
-          return workout;
+      db.collection("session")
+        .find({})
+        .toArray((err, workouts) => {
+          if (err) return res.json(`could not find entries: ${err}`);
+          const workoutsArray = workouts.map((entry) => {
+            let workout = {
+              _id: entry._id,
+              type: entry.type,
+              date: entry.date,
+              title: entry.workout_title,
+              exercise_count: entry.num_of_exercises,
+            };
+            return workout;
+          });
+          res.json(workoutsArray);
         });
-        res.json(workoutsArray);
-      });
     })
 
     .delete((req, res) => {
-      db.deleteMany({}, (err, data) => {
+      db.collection("session").deleteMany({}, (err, data) => {
         if (err) res.json(`could not delete: ${err}`);
         res.json("complete delete successful");
       });
@@ -56,26 +58,28 @@ module.exports = function (app, db) {
 
     .get(function (req, res) {
       const workoutId = req.params.id;
-      db.find({ _id: new ObjectId(workoutId) }).toArray((err, data) => {
-        if (err) res.json(`could not find ${workoutId} ${err}`);
-        if (data[0]) {
-          const workout = {
-            _id: data[0]._id,
-            title: data[0].workout_title,
-            comments: data[0].comments,
-          };
-          res.json(workout);
-        } else {
-          console.log(workoutId);
-          res.json(`no workout exists`);
-        }
-      });
+      db.collection("session")
+        .find({ _id: new ObjectId(workoutId) })
+        .toArray((err, data) => {
+          if (err) res.json(`could not find ${workoutId} ${err}`);
+          if (data[0]) {
+            const workout = {
+              _id: data[0]._id,
+              title: data[0].workout_title,
+              comments: data[0].comments,
+            };
+            res.json(workout);
+          } else {
+            console.log(workoutId);
+            res.json(`no workout exists`);
+          }
+        });
     })
 
     .post(function (req, res) {
       const workoutId = req.params.id;
       const comment = req.body.comment;
-      db.findAndModify(
+      db.collection("session").findAndModify(
         { _id: new ObjectId(workoutId) },
         {},
         { $inc: { num_of_comments: 1 }, $push: { comments: comment } },
@@ -94,14 +98,17 @@ module.exports = function (app, db) {
 
     .delete(function (req, res) {
       const workoutId = req.params.id;
-      db.findOneAndDelete({ _id: new ObjectId(workoutId) }, (err, doc) => {
-        if (err) {
-          res.send(`could not delete ${workoutId} ${err}`);
-        } else {
-          doc.value
-            ? res.json(`delete successful`)
-            : res.json(`no workout exists`);
+      db.collection("session").findOneAndDelete(
+        { _id: new ObjectId(workoutId) },
+        (err, doc) => {
+          if (err) {
+            res.send(`could not delete ${workoutId} ${err}`);
+          } else {
+            doc.value
+              ? res.json(`delete successful`)
+              : res.json(`no workout exists`);
+          }
         }
-      });
+      );
     });
 };
