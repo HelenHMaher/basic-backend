@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { StyledAddSession } from "./AddSession.styled";
+import ListSessions from "./ListSessions";
 import axios from "axios";
 
 function AddSession() {
@@ -18,9 +19,14 @@ function AddSession() {
             date: ele.date,
             type: ele.type,
             title: ele.title,
+            id: ele._id,
           });
         });
-        console.log(sessionArray);
+        console.log(
+          sessionArray.sort((a, b) => {
+            return new Date(b.date).getTime() - new Date(a.date).getTime();
+          })
+        );
         if (sessions.length !== sessionArray.length) setSessions(sessionArray);
       })
       .catch((error) => {
@@ -50,11 +56,14 @@ function AddSession() {
         </button>
       </form>
       <div>
-        <ul>
-          <li>Date: {sessions[0]["date"]}</li>
-          <li>Type: {sessions[0]["type"]}</li>
-          <li>Title: {sessions[0]["title"]}</li>
-        </ul>
+        {sessions.map((session) => (
+          <ListSessions
+            key={session["id"]}
+            date={session["date"]}
+            type={session["type"]}
+            title={session["title"]}
+          />
+        ))}
       </div>
     </StyledAddSession>
   );
