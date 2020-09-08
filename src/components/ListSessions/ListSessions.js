@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { AddClimb } from "../AddClimb";
-import { AddDrylandWorkout } from "../AddDrylandWorkout";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 import { StyledListSessions } from "./ListSessions.styled";
 
 function ListSessions(props) {
@@ -20,15 +18,6 @@ function ListSessions(props) {
           </ul>
 
           <Link to={`/${type}/${id}`}>Edit</Link>
-
-          <Switch>
-            <Route path="/climb">
-              <AddClimb />
-            </Route>
-            <Route path="/dryland">
-              <AddDrylandWorkout />
-            </Route>
-          </Switch>
         </div>
       </Router>
     </StyledListSessions>
