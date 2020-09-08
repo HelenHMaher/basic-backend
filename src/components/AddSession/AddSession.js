@@ -64,6 +64,7 @@ function AddSession() {
           {sessions.map((session) => (
             <ListSessions
               key={session["id"]}
+              id={session["id"]}
               date={session["date"]}
               type={session["type"]}
               title={session["title"]}
