@@ -19,7 +19,7 @@ function ListSessions(props) {
             <li>Id: {id}</li>
           </ul>
 
-          <Link to={`/${props.type}/${props.key}`}>Edit</Link>
+          <Link to={`/${type}/${id}`}>Edit</Link>
 
           <Switch>
             <Route path="/climb">

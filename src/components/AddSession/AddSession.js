@@ -22,7 +22,7 @@ function AddSession() {
             date: ele.date,
             type: ele.type,
             title: ele.title,
-            id: ele._id.str,
+            id: ele._id,
           });
         });
         console.log(
