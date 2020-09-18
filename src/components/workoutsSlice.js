@@ -21,7 +21,9 @@ export const addNewWorkout = createAsyncThunk(
 
 export const fetchWorkouts = createAsyncThunk(
   "posts/fetchPosts",
-  async () => {}
+  async () => {
+    const response = await axios({method: 'get', url: '/api/session/'})
+  }
 );
 
 const workoutsSlice = createSlice({
@@ -29,11 +31,12 @@ const workoutsSlice = createSlice({
   initialState,
   reducers: {
     workoutUpdated(state, action) {
-      const { id, title, content } = action.payload;
+      const { id, title, type, content} = action.payload;
       const existingWorkout = state.entities[id];
       if (existingWorkout) {
         existingWorkout.title = title;
         existingWorkout.content = content;
+        existingWorkout.type = type;
       }
     },
   },
