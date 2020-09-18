@@ -14,16 +14,52 @@ const initialState = workoutsAdapter.getInitialState({
   error: null,
 });
 
+export const addNewWorkout = createAsyncThunk(
+  "workout/addNewWorkout",
+  async (initialWorkout) => {}
+);
+
+export const fetchWorkouts = createAsyncThunk(
+  "posts/fetchPosts",
+  async () => {}
+);
+
 const workoutsSlice = createSlice({
   name: "workouts",
   initialState,
   reducers: {
-    workoutAdded(state, action) {},
-    workoutUpdated(state, action) {},
+    workoutUpdated(state, action) {
+      const { id, title, content } = action.payload;
+      const existingWorkout = state.entities[id];
+      if (existingWorkout) {
+        existingWorkout.title = title;
+        existingWorkout.content = content;
+      }
+    },
   },
-  extraReducers: {},
+  extraReducers: {
+    [fetchWorkouts.pending]: (state, action) => {
+      state.status = "loading";
+    },
+    [fetchWorkouts.fulfilled]: (state, action) => {
+      state.status = "succeeded";
+      workoutsAdapter.upsertMany(state, action.payload);
+    },
+    [fetchWorkouts.rejected]: (state, action) => {
+      state.status = "failed";
+      state.error = action.error.message;
+    },
+    [addNewWorkout.fulfilled]: workoutsAdapter.addOne,
+  },
 });
 
-export const { workoutAdded, workoutUpdated } = workoutsSlice.actions;
+export const { workoutUpdated } = workoutsSlice.actions;
 
 export default createSlice.reducer;
+
+export const {
+    selectAll: selectAllWorkouts,
+    selectById: selectWorkoutsById,
+    selectIds: selectPostIds,
+} = workoutsAdapter.getSelectors((state) => state.workouts)
+}
