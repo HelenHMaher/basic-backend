@@ -4,6 +4,7 @@ import {
   createSelector,
   createEntityAdapter,
 } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const workoutsAdapter = createEntityAdapter({
   sortComparer: (a, b) => b.date.localeCompare(a.date),
@@ -16,22 +17,25 @@ const initialState = workoutsAdapter.getInitialState({
 
 export const addNewWorkout = createAsyncThunk(
   "workout/addNewWorkout",
-  async (initialWorkout) => {}
-);
-
-export const fetchWorkouts = createAsyncThunk(
-  "posts/fetchPosts",
-  async () => {
-    const response = await axios({method: 'get', url: '/api/session/'})
+  async (initialWorkout) => {
+    const response = await axios.post("/api/session/", {
+      workout: initialWorkout,
+    });
+    return response.workout;
   }
 );
+
+export const fetchWorkouts = createAsyncThunk("posts/fetchPosts", async () => {
+  const response = await axios.get("/api/session/");
+  return response.workouts;
+});
 
 const workoutsSlice = createSlice({
   name: "workouts",
   initialState,
   reducers: {
     workoutUpdated(state, action) {
-      const { id, title, type, content} = action.payload;
+      const { id, title, type, content } = action.payload;
       const existingWorkout = state.entities[id];
       if (existingWorkout) {
         existingWorkout.title = title;
@@ -61,8 +65,7 @@ export const { workoutUpdated } = workoutsSlice.actions;
 export default createSlice.reducer;
 
 export const {
-    selectAll: selectAllWorkouts,
-    selectById: selectWorkoutsById,
-    selectIds: selectPostIds,
-} = workoutsAdapter.getSelectors((state) => state.workouts)
-}
+  selectAll: selectAllWorkouts,
+  selectById: selectWorkoutsById,
+  selectIds: selectPostIds,
+} = workoutsAdapter.getSelectors((state) => state.workouts);

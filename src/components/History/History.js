@@ -1,44 +1,38 @@
-import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { AddDrylandWorkout } from "../AddDrylandWorkout";
-import { AddClimb } from "../AddClimb";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import ListSessions from "../ListSessions";
-import axios from "axios";
+import { fetchWorkouts, selectWorkoutsById } from "../workoutsSlice";
 import { StyledHistory } from "./History.styled";
 
-function History() {
-  const [sessions, setSessions] = useState([{ date: "", type: "", title: "" }]);
+let WorkoutExcerpt = ({ workoutId }) => {
+  const workout = useSelector((state) => selectWorkoutsById(state, workoutId));
+  return (
+    <article className="workout-excertp" key={workout.id}>
+      <h3>{workout.title}</h3>
+      <div>
+        <WorkoutType type={workout.type} />
+        <Date date={workout.date} />
+      </div>
+      <p className="workout-content">{workout.content.substring(0, 100)}</p>
+      <Link to={`/workout/${workout.id}`} className="button mute-button">
+        View Post
+      </Link>
+    </article>
+  );
+};
 
-  function getSessions() {
-    axios({
-      method: "GET",
-      url: "/api/session/",
-    })
-      .then((response) => {
-        const sessionArray = [];
-        response.data.forEach((ele) => {
-          sessionArray.push({
-            date: ele.date,
-            type: ele.type,
-            title: ele.title,
-            id: ele._id,
-          });
-        });
-        console.log(
-          sessionArray.sort((a, b) => {
-            return new Date(b.date).getTime() - new Date(a.date).getTime();
-          })
-        );
-        if (sessions.length !== sessionArray.length) setSessions(sessionArray);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
+function History() {
+  const dispatch = useDispatch();
+  const orderedWorkoutIds = useSelector(selectPostIds);
+  const workoutStatus = useSelector((state) => state.workouts.status);
+  const error = useSelector((state) => state.posts.error);
 
   useEffect(() => {
-    getSessions();
-  }, [sessions]);
+    if (workoutStatus === "idle") {
+      dispatch(fetchWorkouts());
+    }
+  }, [workoutStatus, dispatch]);
 
   return (
     <StyledHistory>
