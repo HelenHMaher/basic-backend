@@ -69,3 +69,8 @@ export const {
   selectById: selectWorkoutsById,
   selectIds: selectWorkoutIds,
 } = workoutsAdapter.getSelectors((state) => state.workouts);
+
+export const selectWorkoutsByUser = createSelector(
+  [selectAllWorkouts, (state, userId) => userId],
+  (workouts, userId) => workouts.filter((workouts) => workouts.user === userId)
+);

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import ListSessions from "../ListSessions";
+
 import {
   fetchWorkouts,
   selectWorkoutsById,
